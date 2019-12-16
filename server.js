@@ -13,6 +13,10 @@ const PORT = 8000;
 
 const noteIDMark = 0;
 
+//Array for saving notes
+
+let typedNote = [];
+
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -49,23 +53,28 @@ app.get("/api/notes", function(req, res) {
 });
 });
 
-//Referred to Jake's repo for the post
+// Referred to Jake's repo for the post
 
 app.post("/api/notes", function(req, res){
 
   const savedNote = req.body;
-  let savedNotesStringified = "";
+  const jsonData = JSON.stringify(savedNote);
 
-  //Note id counter here
+  let combinedNotes = [jsonData];
 
-  noteIDMark++;
+  typedNote.push(jsonData);
+  // let savedNotesStringified = "";
 
-  savedNote.id = noteIDMark;
+  // //Note id counter here
 
-  fs.writeFile('db/db.json','utf8', (err, notes) => {
+  // noteIDMark++;
+
+  // savedNote.id = noteIDMark;
+
+  fs.writeFile('db/db.json', typedNote, 'utf8', (err, notes) => {
   if (err) throw err;
-  console.log(notes);
-  return res.json(notes);
+  console.log(typedNote);
+  return res.json(typedNote);
 
 });
 

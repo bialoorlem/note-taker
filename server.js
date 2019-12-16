@@ -9,6 +9,10 @@ const fs = require("fs");
 const app = express();
 const PORT = 8000;
 
+//Set ID Marker for notes
+
+const noteIDMark = 0;
+
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -32,14 +36,38 @@ app.get("/notes", function(req, res) {
 //   res.sendFile(path.join(__dirname, "./public/index.html"));
 // });
 
-const savedNotes = 
+// const savedNotes = 
 
 // Displays all saved notes
 app.get("/api/notes", function(req, res) {
-  return res.json(characters);
+
+ fs.readFile('db/db.json','utf8', (err, notes) => {
+  if (err) throw err;
+  console.log(notes);
+  return res.json(notes);
+
+});
 });
 
+//Referred to Jake's repo for the post
+
 app.post("/api/notes", function(req, res){
+
+  const savedNote = req.body;
+  let savedNotesStringified = "";
+
+  //Note id counter here
+
+  noteIDMark++;
+
+  savedNote.id = noteIDMark;
+
+  fs.writeFile('db/db.json','utf8', (err, notes) => {
+  if (err) throw err;
+  console.log(notes);
+  return res.json(notes);
+
+});
 
 
 });

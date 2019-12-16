@@ -85,6 +85,8 @@ app.delete("/api/notes:id", function(req, res){
 
   const deletedNote = parseInt(req.params.id);
 
+  let savedNoteStringified = "";
+
 })
 
 

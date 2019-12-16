@@ -79,6 +79,18 @@ throw err;
 
 });
 
+//refered to Jake's repo again
+
+app.delete("/api/notes:id", function(req, res){
+
+  const deletedNote = parseInt(req.params.id);
+
+})
+
+
+
+
+
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function() {

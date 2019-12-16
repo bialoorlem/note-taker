@@ -53,24 +53,15 @@ app.get("/api/notes", function(req, res) {
 });
 });
 
-// Referred to Jake's repo for the post
+//Worked with Jake on this post
 
 app.post("/api/notes", function(req, res){
 
   const savedNote = req.body;
-  // const jsonData = JSON.stringify(savedNote);
 
-  // let combinedNotes = [jsonData];
 
   typedNote.push(savedNote);
   const typedNoteString = JSON.stringify(typedNote);
-  // let savedNotesStringified = "";
-
-  // //Note id counter here
-
-  // noteIDMark++;
-
-  // savedNote.id = noteIDMark;
 
     console.log(typedNoteString);
 

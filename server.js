@@ -32,6 +32,18 @@ app.get("/notes", function(req, res) {
 //   res.sendFile(path.join(__dirname, "./public/index.html"));
 // });
 
+const savedNotes = 
+
+// Displays all saved notes
+app.get("/api/notes", function(req, res) {
+  return res.json(characters);
+});
+
+app.post("/api/notes", function(req, res){
+
+
+});
+
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function() {

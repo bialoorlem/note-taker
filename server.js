@@ -47,7 +47,7 @@ app.get("/api/notes", function(req, res) {
 
  fs.readFile('db/db.json','utf8', (err, notes) => {
   if (err) throw err;
-  console.log(notes);
+  // console.log(notes);
   return res.json(notes);
 
 });
@@ -58,11 +58,12 @@ app.get("/api/notes", function(req, res) {
 app.post("/api/notes", function(req, res){
 
   const savedNote = req.body;
-  const jsonData = JSON.stringify(savedNote);
+  // const jsonData = JSON.stringify(savedNote);
 
-  let combinedNotes = [jsonData];
+  // let combinedNotes = [jsonData];
 
-  typedNote.push(jsonData);
+  typedNote.push(savedNote);
+  const typedNoteString = JSON.stringify(typedNote);
   // let savedNotesStringified = "";
 
   // //Note id counter here
@@ -71,10 +72,16 @@ app.post("/api/notes", function(req, res){
 
   // savedNote.id = noteIDMark;
 
-  fs.writeFile('db/db.json', typedNote, 'utf8', (err, notes) => {
-  if (err) throw err;
-  console.log(typedNote);
-  return res.json(typedNote);
+    console.log(typedNoteString);
+
+  fs.writeFile('db/db.json', typedNoteString, function(err) {
+  if (err){
+
+throw err;
+
+  } 
+
+  return res.send(savedNote);
 
 });
 

@@ -40,7 +40,7 @@ app.get("/notes", function(req, res) {
 //   res.sendFile(path.join(__dirname, "./public/index.html"));
 // });
 
-// const savedNotes =
+const savedNotes =
 
 // Displays all saved notes
 app.get("/api/notes", function(req, res) {
@@ -55,6 +55,9 @@ app.get("/api/notes", function(req, res) {
 
 app.post("/api/notes", function(req, res) {
   const savedNote = req.body;
+
+  // Adds the property id with the value uniqueId to the object savedNote
+savedNote.id = uniqueId;
 
   typedNote.push(savedNote);
   const typedNoteString = JSON.stringify(typedNote);
@@ -77,7 +80,7 @@ app.delete("/api/notes:id", function(req, res) {
 
   let savedNoteStringified = "";
 
-  fs.readFile('db/db.json', 'ut8', function(err, savedNoteStringified){
+  fs.readFile('db/db.json', 'utf8', function(err, savedNoteStringified){
     if(err){
 
       console.log(err)
@@ -99,6 +102,8 @@ app.delete("/api/notes:id", function(req, res) {
     fs.writeFile('db/db.json', savedNoteStringified, function(err){
 
       if(err){
+
+        console.log(err);
 
         return
 

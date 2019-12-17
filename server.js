@@ -8,11 +8,12 @@ const db = require("./db/db.json");
 // Sets up the Express App
 // =============================================================
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 3000;
+
 
 //Set ID Marker for notes
 console.log(db)
-let noteIDMark = db[db.length - 1].id;
+let noteIDMark = 0;
 
 //Array for saving notes
 
@@ -41,7 +42,7 @@ app.get("/notes", function(req, res) {
 //   res.sendFile(path.join(__dirname, "./public/index.html"));
 // });
 
-const savedNotes =
+
 
 // Displays all saved notes
 app.get("/api/notes", function(req, res) {
@@ -80,6 +81,8 @@ app.post("/api/notes", function(req, res) {
 
 app.delete("/api/notes/:id", function(req, res) {
   const deletedNote = parseInt(req.params.id);
+  console.log(deletedNote)
+  console.log(noteIDMark);
   
 
   let savedNoteStringified = "";
@@ -93,11 +96,18 @@ app.delete("/api/notes/:id", function(req, res) {
     }
 
     const keptNotes = JSON.parse(savedNoteStringified);
+    console.log("This is kept notes: " + keptNotes)
 
     for (let i = 0; i < keptNotes.length; i++){
+      fs.readFile('db/db.json', 'utf8', function(err, savedNoteStringified){
+        if (err) throw err ;
 
-      if(keptNotes[i].id === deletedNote){
+      })
+
+      if(keptNotes[i].id == deletedNote){
         keptNotes.splice(i,1);
+        console.log("kept Notes: "  + keptNotes)
+        console.log("Deleted Notes: "  + deletedNote)
         savedNoteStringified = JSON.stringify(keptNotes);
       }
 

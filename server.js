@@ -56,8 +56,8 @@ app.get("/api/notes", function(req, res) {
 app.post("/api/notes", function(req, res) {
   const savedNote = req.body;
 
-  // Adds the property id with the value uniqueId to the object savedNote
-savedNote.id = uniqueId;
+  // Adds the property id with the value noteIDMark to the object savedNote
+savedNote.id = noteIDMark;
 
   typedNote.push(savedNote);
   const typedNoteString = JSON.stringify(typedNote);
@@ -75,7 +75,7 @@ savedNote.id = uniqueId;
 
 //refered to Jake's repo again
 
-app.delete("/api/notes:id", function(req, res) {
+app.delete("/api/notes/:id", function(req, res) {
   const deletedNote = parseInt(req.params.id);
 
   let savedNoteStringified = "";

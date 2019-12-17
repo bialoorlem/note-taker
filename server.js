@@ -3,6 +3,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const db = require("./db/db.json");
 
 // Sets up the Express App
 // =============================================================
@@ -10,8 +11,8 @@ const app = express();
 const PORT = 8000;
 
 //Set ID Marker for notes
-
-const noteIDMark = 0;
+console.log(db)
+let noteIDMark = db[db.length - 1].id;
 
 //Array for saving notes
 
@@ -57,7 +58,9 @@ app.post("/api/notes", function(req, res) {
   const savedNote = req.body;
 
   // Adds the property id with the value noteIDMark to the object savedNote
-savedNote.id = noteIDMark;
+  noteIDMark++
+  savedNote.id = noteIDMark;
+
 
   typedNote.push(savedNote);
   const typedNoteString = JSON.stringify(typedNote);
@@ -73,10 +76,11 @@ savedNote.id = noteIDMark;
   });
 });
 
-//refered to Jake's repo again
+//referred to Jake's repo
 
 app.delete("/api/notes/:id", function(req, res) {
   const deletedNote = parseInt(req.params.id);
+  
 
   let savedNoteStringified = "";
 

@@ -40,58 +40,76 @@ app.get("/notes", function(req, res) {
 //   res.sendFile(path.join(__dirname, "./public/index.html"));
 // });
 
-// const savedNotes = 
+// const savedNotes =
 
 // Displays all saved notes
 app.get("/api/notes", function(req, res) {
-
- fs.readFile('db/db.json','utf8', (err, notes) => {
-  if (err) throw err;
-  // console.log(notes);
-  return res.json(notes);
-
-});
+  fs.readFile("db/db.json", "utf8", (err, notes) => {
+    if (err) throw err;
+    // console.log(notes);
+    return res.json(notes);
+  });
 });
 
 //Worked with Jake on this post
 
-app.post("/api/notes", function(req, res){
-
+app.post("/api/notes", function(req, res) {
   const savedNote = req.body;
-
 
   typedNote.push(savedNote);
   const typedNoteString = JSON.stringify(typedNote);
 
-    console.log(typedNoteString);
+  console.log(typedNoteString);
 
-  fs.writeFile('db/db.json', typedNoteString, function(err) {
-  if (err){
+  fs.writeFile("db/db.json", typedNoteString, function(err) {
+    if (err) {
+      throw err;
+    }
 
-throw err;
-
-  } 
-
-  return res.send(savedNote);
-
-});
-
-
+    return res.send(savedNote);
+  });
 });
 
 //refered to Jake's repo again
 
-app.delete("/api/notes:id", function(req, res){
-
+app.delete("/api/notes:id", function(req, res) {
   const deletedNote = parseInt(req.params.id);
 
   let savedNoteStringified = "";
 
-})
+  fs.readFile('db/db.json', 'ut8', function(err, savedNoteStringified){
+    if(err){
 
+      console.log(err)
+      return
 
+    }
 
+    const keptNotes = JSON.parse(savedNoteStringified);
 
+    for (let i = 0; i < keptNotes.length; i++){
+
+      if(keptNotes[i].id === deletedNote){
+        keptNotes.splice(i,1);
+        savedNoteStringified = JSON.stringify(keptNotes);
+      }
+
+    }
+
+    fs.writeFile('db/db.json', savedNoteStringified, function(err){
+
+      if(err){
+
+        return
+
+      }
+
+    });
+    res.send('Got a DELETE request at /user')
+
+  });
+
+});
 
 // Starts the server to begin listening
 // =============================================================
